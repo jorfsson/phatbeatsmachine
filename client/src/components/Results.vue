@@ -1,18 +1,18 @@
 <template>
-  <div class="sand">
-    {{ sand }}
+  <div class="results">
+    {{ results }}
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    sand: 'Sand'
+    results: 'results'
   })
 };
 </script>
 
 <style lang="scss">
-.sand
+.results
   color: green;
 </style>

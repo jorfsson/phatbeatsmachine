@@ -48,8 +48,8 @@ module.exports = {
     host: 'localhost',
     port: 8081,
     proxy: {
-      '^/api/*': {
-        target: 'http://localhost:/api/',
+      '^/*': {
+        target: 'http://localhost:/',
         secure: false
       }
     }

@@ -1,7 +1,12 @@
 <template>
-  <div class="goodbye">
-    {{ sup }}
-    <Results></Results>
+  <div class="search-container">
+    <div class="search">
+      <form v-on:submit="search($event)">
+        <input v-on:change="handleChange($event)" type="text">
+        <input type="submit">
+      </form>
+      <Results></Results>
+    </div>
   </div>
 </template>
 
@@ -10,13 +15,37 @@ import Results from './Results.vue';
 
 export default {
   components: { Results },
-  data: () => ({
-    sup: 'Obi Wan Genobi'
-  })
+  data: function() {
+    return {
+      searchTerm: ""
+    }
+  },
+  methods: {
+    handleChange: function (e) {
+      this.searchTerm = e.target.value;
+    },
+    search: function (e) {
+      e.preventDefault();
+      fetch('http://localhost:3000/search', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          search: {
+            term: this.searchTerm,
+            type: 'Artist'
+          }
+        })
+      })
+      .then((res) => console.log(res.status))
+      .catch((err) => console.log(err))
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-.hello
-  color: red;
+.search-container
+  display: flex;
 </style>

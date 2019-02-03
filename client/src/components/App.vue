@@ -1,19 +1,21 @@
 <template>
-  <div class="hello">
-    <h1>Hello World!</h1>
-    {{ message }}
-  </div>
+  <search></search>
 </template>
 
 <script>
+import Search from './Search.vue';
+
 export default {
-  data: () => ({
-    message: 'Hello There'
-  })
+  components: { Search },
 };
 </script>
 
 <style lang="scss">
-h1
-  color: blue;
+body *
+  outline: dotted;
+body
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Roboto'
 </style>
