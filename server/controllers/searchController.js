@@ -1,22 +1,9 @@
 const Artist = require('../models/Artist.js'),
-      request = require('request-promise-native');
+      { lastRequest } = require('./utils.js');
 
 exports.search = async (req, res, next) => {
-  req.results = await request({
-    url: 'http://ws.audioscrobbler.com/2.0/',
-    type: 'GET',
-    qs: {
-      method: `${req.body.search.type}.getsimilar`,
-      artist: req.body.search.term,
-      api_key: '04c96ec32bbace5646ad77d7c171ae4a' ,
-      format: 'json'
-    },
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(data => JSON.parse(data).similarartists.artist)
-  .catch(err => console.log(err))
+  let { type, term } = req.body.search;
+  req.results = await lastRequest(type, 'getsimilar', term);
   next();
 }
 
@@ -27,7 +14,7 @@ exports.createArtist = (req, res, next) => {
 
 exports.addSimilarArtists = (req, res, next) => {
   req.results.forEach(artist => {
-    req.artist.addRelationship('Artist', 'name', artist.name, 'IS_SIMILAR');
+    req.artist.addRelationship('Artist', 'name', artist.name, 'IS_SIMILAR').then(res => console.log(res)).catch(err => console.log('hello ', err))
   })
   next();
 }
