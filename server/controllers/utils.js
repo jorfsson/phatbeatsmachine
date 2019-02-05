@@ -1,6 +1,6 @@
 const request = require('request-promise-native');
 
-exports.lastRequest = (type, method, term) => request({
+module.exports = (type, method, term) => request({
   url: 'http://ws.audioscrobbler.com/2.0/',
   type: 'GET',
   qs: {
